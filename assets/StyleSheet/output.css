@@ -8,6 +8,9 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-500: oklch(63.7% 0.237 25.331);
+    --color-amber-300: oklch(87.9% 0.169 91.605);
+    --color-blue-800: oklch(42.4% 0.199 265.638);
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-7xl: 80rem;
@@ -220,6 +223,9 @@
   .grid {
     display: grid;
   }
+  .hidden {
+    display: none;
+  }
   .table {
     display: table;
   }
@@ -228,6 +234,12 @@
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
+  }
+  .h-12\.5 {
+    height: calc(var(--spacing) * 12.5);
+  }
+  .h-16 {
+    height: calc(var(--spacing) * 16);
   }
   .h-48 {
     height: calc(var(--spacing) * 48);
@@ -238,6 +250,12 @@
   .min-h-screen {
     min-height: 100vh;
   }
+  .w-1 {
+    width: var(--spacing);
+  }
+  .w-1\/2 {
+    width: calc(1 / 2 * 100%);
+  }
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
@@ -247,14 +265,32 @@
   .w-8\/100 {
     width: calc(8 / 100 * 100%);
   }
+  .w-10 {
+    width: calc(var(--spacing) * 10);
+  }
   .w-12 {
     width: calc(var(--spacing) * 12);
+  }
+  .w-16 {
+    width: calc(var(--spacing) * 16);
+  }
+  .w-50 {
+    width: calc(var(--spacing) * 50);
+  }
+  .w-50\/100 {
+    width: calc(50 / 100 * 100%);
   }
   .w-80 {
     width: calc(var(--spacing) * 80);
   }
   .w-80\/100 {
     width: calc(80 / 100 * 100%);
+  }
+  .w-90 {
+    width: calc(var(--spacing) * 90);
+  }
+  .w-90\/100 {
+    width: calc(90 / 100 * 100%);
   }
   .w-full {
     width: 100%;
@@ -292,6 +328,9 @@
   .flex-wrap {
     flex-wrap: wrap;
   }
+  .content-start {
+    align-content: flex-start;
+  }
   .items-center {
     align-items: center;
   }
@@ -307,11 +346,20 @@
   .gap-1\.5 {
     gap: calc(var(--spacing) * 1.5);
   }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
+  .gap-2\.5 {
+    gap: calc(var(--spacing) * 2.5);
+  }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
+  }
+  .gap-5 {
+    gap: calc(var(--spacing) * 5);
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
@@ -344,6 +392,10 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
@@ -366,6 +418,18 @@
   }
   .border-\[rgba\(212\,175\,55\,0\.2\)\] {
     border-color: rgba(212,175,55,0.2);
+  }
+  .border-red-500 {
+    border-color: var(--color-red-500);
+  }
+  .border-b-\[\#D9CFC7\] {
+    border-bottom-color: #D9CFC7;
+  }
+  .border-b-amber-300 {
+    border-bottom-color: var(--color-amber-300);
+  }
+  .border-b-blue-800 {
+    border-bottom-color: var(--color-blue-800);
   }
   .bg-\[\#000000\] {
     background-color: #000000;
@@ -444,6 +508,12 @@
   .object-cover {
     object-fit: cover;
   }
+  .p-1 {
+    padding: var(--spacing);
+  }
+  .p-1\.5 {
+    padding: calc(var(--spacing) * 1.5);
+  }
   .p-6 {
     padding: calc(var(--spacing) * 6);
   }
@@ -468,6 +538,9 @@
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
+  .py-2\.5 {
+    padding-block: calc(var(--spacing) * 2.5);
+  }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
@@ -488,6 +561,12 @@
   }
   .text-center {
     text-align: center;
+  }
+  .text-left {
+    text-align: left;
+  }
+  .text-right {
+    text-align: right;
   }
   .font-mono {
     font-family: var(--font-mono);
@@ -552,6 +631,9 @@
   }
   .text-\[\#1F150C\] {
     color: #1F150C;
+  }
+  .text-\[\#1F150C\]\/50 {
+    color: color-mix(in oklab, #1F150C 50%, transparent);
   }
   .text-\[\#1F150C\]\/70 {
     color: color-mix(in oklab, #1F150C 70%, transparent);
@@ -622,6 +704,12 @@
     --tw-duration: 300ms;
     transition-duration: 300ms;
   }
+  :is(.\*\:w-1\/2 > *) {
+    width: calc(1 / 2 * 100%);
+  }
+  :is(.\*\:w-full > *) {
+    width: 100%;
+  }
   @media (hover: hover) {
     .hover\:-translate-y-1:hover {
       --tw-translate-y: calc(var(--spacing) * -1);
@@ -663,6 +751,9 @@
     .hover\:text-\[\#F9F8F6\]:hover {
       color: #F9F8F6;
     }
+    .hover\:text-red-500:hover {
+      color: var(--color-red-500);
+    }
   }
   .active\:scale-95:active {
     --tw-scale-x: 95%;
@@ -676,6 +767,9 @@
     }
   }
   @media (width >= 48rem) {
+    .md\:flex {
+      display: flex;
+    }
     .md\:p-12 {
       padding: calc(var(--spacing) * 12);
     }
