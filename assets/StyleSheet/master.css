@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+
+/* Custom Maroon & Gold Scrollbar for the Cart */
+.cart-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.cart-scroll::-webkit-scrollbar-track {
+    background: #2a1116;
+}
+
+.cart-scroll::-webkit-scrollbar-thumb {
+    background: #800000;
+    border-radius: 2px;
+}
+
+.cart-scroll::-webkit-scrollbar-thumb:hover {
+    background: #d4af37;
+}
+
+
