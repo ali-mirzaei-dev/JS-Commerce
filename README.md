@@ -14,7 +14,7 @@ This project simulates a real-world shopping cart experience, allowing users to 
 
 ## Demo
 
-[Live Demo](#)
+[Live Demo](https://ali-mirzaei-dev.github.io/JS-Commerce/)
 
 ## Features
 
