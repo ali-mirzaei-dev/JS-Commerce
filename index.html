@@ -199,9 +199,9 @@
                     </div>
                 </div>
 
-                <!-- Cart Items Container -->
+                <!--=======#2-2-1 CART  =======-->
                 <div class="flex flex-col gap-3 overflow-y-auto cart-scroll flex-1 pr-2">
-                    <!-- Empty State -->
+                    <!-- empty cart -->
                     <div id="emptyCart" class=" flex flex-col items-center justify-center text-center py-12 opacity-50">
                         <svg class="w-12 h-12 text-[#1F150C] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -209,7 +209,7 @@
                         <p class="text-xs uppercase">Your cart is empty</p>
                     </div>
 
-                    <!-- JS will inject cart items here -->
+                    <!-- inject new products -->
                     <div id="newProduct" class="flex flex-wrap justify-between gap-3  content-start">
 
 
@@ -217,7 +217,7 @@
                     </div>
                 </div>
 
-                <!-- Total & Checkout -->
+                <!--=======#3-2-2 CHECKOUT =======-->
                 <div class="border-t border-[#D9CFC7] pt-4 flex flex-col gap-4">
                     <div class="flex justify-between items-center">
                         <span class="text-xs uppercase">Total:</span>
@@ -227,12 +227,44 @@
 
                         </div>
                     </div>
-                    <button class="w-full bg-[#C9B59C] text-[#F9F8F6] py-3 rounded-md hover:bg-[#1F150C] duration-300 uppercase text-sm active:scale-95">
+                    <button id="checkBtn" onclick="checkOutBtm()" class="w-full bg-[#C9B59C] text-[#F9F8F6] py-3 rounded-md hover:bg-[#1F150C] duration-300 uppercase text-sm active:scale-95">
                         Checkout
                     </button>
                 </div>
             </div>
         </aside>
+
+        <!--==================#2-3 POP UP  ==================-->
+        <div id="outerPopUp" class="inset-0 fixed z-40 bg-[#1F150C]/80 backdrop-blur-sm items-center justify-center p-4 hidden">
+
+            <div id="innerPopUp" class="w-full max-w-md bg-[#F9F8F6] border border-[#D9CFC7] rounded-xl shadow-2xl p-8 flex flex-col gap-6 relative">
+
+                <button onclick="closePopUp()" class="absolute top-4 right-4 text-[#1F150C]/50 hover:text-[#1F150C] text-lg cursor-pointer">
+                    X
+                </button>
+
+                <div class="flex flex-col items-center text-center gap-4 pt-4">
+                    <div class="w-16 h-16 bg-[#C9B59C]/20 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-[#C9B59C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h6 class="text-2xl text-[#1F150C]">Order Placed Successfully!</h6>
+                    <p class="text-sm text-[#1F150C]/70">Thank you for your purchase. Your gear is on the way.</p>
+                </div>
+
+                <div class="flex flex-col gap-3 mt-2">
+                    <button onclick="continueToPay()" class="w-full bg-[#C9B59C] text-[#F9F8F6] py-3 rounded-md hover:bg-[#1F150C] duration-300 uppercase text-sm active:scale-95 cursor-pointer">
+                        Continue to Pay
+                    </button>
+                    <button onclick="closePopUp()" class="w-full text-[#1F150C]/70 hover:text-[#1F150C] duration-300 uppercase text-xs py-2 active:scale-95 cursor-pointer">
+                        Keep Shopping
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -241,7 +273,11 @@
         let globalCart = []
         const newProduct = document.getElementById("newProduct")
         const totalPrice = document.getElementById("totalPrice")
+        const outerPopUp = document.getElementById("outerPopUp")
+        const topCounter = document.getElementsByClassName("topCounter")
+        const checkBtn = document.getElementById("checkBtn")
 
+        // add to cart
         function addToCart(element) {
             const addedName = element.parentElement.parentElement.querySelector("h3")
             const addedCost = element.parentElement.querySelector("div>span:nth-of-type(2)")
@@ -254,6 +290,12 @@
                 image: addImage
             }
             globalCart.push(addedCart)
+            checkBtn.innerText = "CHECKOUT"
+            checkBtn.classList.add("bg-[#C9B59C]")
+            checkBtn.classList.add("hover:bg-[#1F150C]")
+            checkBtn.classList.add("cursor-pointer")
+            checkBtn.classList.remove("bg-red-500")
+            checkBtn.classList.remove("cursor-not-allowed")
             cartBuilder();
         }
 
@@ -268,7 +310,6 @@
         function cartBuilder() {
 
             // counter update
-            const topCounter = document.getElementsByClassName("topCounter")
             const counter = globalCart.length
             topCounter[0].innerText = counter
             topCounter[1].innerText = counter
@@ -303,6 +344,28 @@
             newProduct.innerHTML = addedProduct;
             totalPrice.innerText = priceCalculator;
         }
+
+        function checkOutBtm() {
+
+            if (topCounter[0].innerText > 0) {
+                outerPopUp.classList.remove("hidden")
+                outerPopUp.classList.add("flex")
+            } else {
+                checkBtn.innerText = "Cart is Empty!"
+                checkBtn.classList.remove("bg-[#C9B59C]")
+                checkBtn.classList.remove("hover:bg-[#1F150C]")
+                checkBtn.classList.add("bg-red-500")
+                checkBtn.classList.add("cursor-not-allowed")
+
+
+            }
+        }
+
+        function closePopUp() {
+            outerPopUp.classList.add("hidden")
+            outerPopUp.classList.remove("flex")
+        }
+
     </script>
 </body>
 
