@@ -290,6 +290,7 @@
 
         // Onload Vars
         let globalCart = []
+        let totalAmount = 0
         const newProduct = document.getElementById("newProduct")
         const totalPrice = document.getElementById("totalPrice")
         const outerPopUp = document.getElementById("outerPopUp")
@@ -306,7 +307,7 @@
             let productExist = false
 
             // array builder
-            for (i = 0; i < globalCart.length; i++) {
+            for (let i = 0; i < globalCart.length; i++) {
                 if (globalCart[i].name == addedName.innerText) {
                     globalCart[i].amount += 1;
                     productExist = true
@@ -361,8 +362,7 @@
             // counter update
             let counter = globalCart.length
 
-            let totalAmount = 0
-            for (i = 0; i < counter; i++) {
+            for (let i = 0; i < counter; i++) {
                 totalAmount += +globalCart[i].amount
             }
             topCounter[0].innerText = totalAmount
@@ -402,7 +402,7 @@
             totalPrice.innerText = priceCalculator;
         }
 
-        //---// CHECK OUT BTN \\---//
+        // CHECK OUT BTN
         function checkOutBtm() {
 
             if (topCounter[0].innerText > 0) {
@@ -437,16 +437,20 @@
             cartBuilder()
         }
 
-        //---// clear full cart btn \\---//
+        // clear full cart btn
         function clearCart() {
-            clearConfirm.classList.remove("hidden")
-            clearConfirm.classList.add("flex")
+            if (totalAmount > 0) {
+                clearConfirm.classList.remove("hidden")
+                clearConfirm.classList.add("flex")
+            }
         }
         function yes() {
+            totalAmount = 0
             globalCart = []
             cartBuilder()
             clearConfirm.classList.add("hidden")
             clearConfirm.classList.remove("flex")
+
         }
         function no() {
             clearConfirm.classList.add("hidden")
