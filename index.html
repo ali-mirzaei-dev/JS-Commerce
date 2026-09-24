@@ -305,14 +305,28 @@
             const addedName = element.parentElement.parentElement.querySelector("h3")
             const addedCost = element.parentElement.querySelector("div>span:nth-of-type(2)")
             const addImage = element.parentElement.parentElement.parentElement.querySelector("img").getAttribute("src")
+            let productExist = false
 
             // array builder
-            let addedCart = {
-                name: addedName.innerText,
-                price: +addedCost.innerText,
-                image: addImage
+            for (i = 0; i < globalCart.length; i++) {
+                if (globalCart[i].name == addedName.innerText) {
+                    globalCart[i].amount += 1;
+                    productExist = true
+
+                }
             }
-            globalCart.push(addedCart)
+            if (productExist == false) {
+
+                let addedCart = {
+                    name: addedName.innerText,
+                    price: +addedCost.innerText,
+                    image: addImage,
+                    amount: 1
+                }
+                globalCart.push(addedCart)
+            }
+
+
             checkBtn.innerText = "CHECKOUT"
             checkBtn.classList.add("bg-[#C9B59C]")
             checkBtn.classList.add("hover:bg-[#1F150C]")
@@ -354,7 +368,8 @@
                 addedProduct += "<img src='" + globalCart[i].image + "' alt='' class='w-16 h-16 object-cover rounded-md'>";
                 addedProduct += "<div class='flex flex-wrap w-1/2 py-2.5 *:w-full'>";
                 addedProduct += "<h6 class='text-left text-sm'>" + globalCart[i].name + "</h6>";
-                addedProduct += "<span class='text-left text-xs text-[#1F150C]/70'>$" + globalCart[i].price + "</span>";
+                addedProduct += "<span class='text-left text-xs text-[#1F150C]/70'>$" + globalCart[i].price * globalCart[i].amount + "</span>";
+                addedProduct += "<span class='text-left text-xs text-[#1F150C]/70'>" + globalCart[i].amount + "</span>";
                 addedProduct += "</div>";
                 addedProduct += "<button onClick='removeBtn(this)' data-index='" + i + "' class='flex-1 text-right text-[#1F150C]/50 hover:text-red-500 duration-300 text-sm cursor-pointer'>X</button>";
                 addedProduct += "</div>";
@@ -368,6 +383,7 @@
             totalPrice.innerText = priceCalculator;
         }
 
+        //---// CHECK OUT BTN \\---//
         function checkOutBtm() {
 
             if (topCounter[0].innerText > 0) {
@@ -404,6 +420,7 @@
             cartBuilder()
         }
 
+        //---// clear full cart btn \\---//
         function clearCart() {
             clearConfirm.classList.remove("hidden")
             clearConfirm.classList.add("flex")
