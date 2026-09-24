@@ -300,7 +300,7 @@
         const successSVG = document.getElementById("successSVG")
         const clearConfirm = document.getElementById("clearConfirm")
 
-        // add to cart
+        // add new products to cart
         function addToCart(element) {
             const addedName = element.parentElement.parentElement.querySelector("h3")
             const addedCost = element.parentElement.querySelector("div>span:nth-of-type(2)")
@@ -336,11 +336,27 @@
             cartBuilder();
         }
 
-        // delete product
+        // delete  Btn function
         function removeBtn(element) {
-            let deleteProduct = element.dataset.index;
+            let deleteProduct = +element.dataset.index;
             globalCart.splice(deleteProduct, 1);
             cartBuilder();
+        }
+
+        // plus  Btn function 
+        function plusBtn(element) {
+            let plusElement = +element.dataset.index;
+            globalCart[plusElement].amount++
+            cartBuilder();
+        }
+
+        // minus  Btn function 
+        function minusBtn(element) {
+            let minusElement = +element.dataset.index;
+            if (globalCart[minusElement].amount > 1) {
+                globalCart[minusElement].amount--
+                cartBuilder();
+            }
         }
 
         // cart builder
@@ -364,18 +380,20 @@
             let priceCalculator = 0
 
             for (let i = 0; i < counter; i++) {
-                addedProduct += "<div class='flex w-full border-b gap-5 border-b-[#D9CFC7] py-1.5'>";
-                addedProduct += "<img src='" + globalCart[i].image + "' alt='' class='w-16 h-16 object-cover rounded-md'>";
-                addedProduct += "<div class='flex flex-wrap w-1/2 py-2.5 *:w-full'>";
-                addedProduct += "<h6 class='text-left text-sm'>" + globalCart[i].name + "</h6>";
-                addedProduct += "<span class='text-left text-xs text-[#1F150C]/70'>$" + globalCart[i].price * globalCart[i].amount + "</span>";
-                addedProduct += "<span class='text-left text-xs text-[#1F150C]/70'>" + globalCart[i].amount + "</span>";
+                addedProduct += "<div class='flex w-full items-center gap-3 border-b border-[#D9CFC7] py-3'>";
+                addedProduct += "<img src='" + globalCart[i].image + "' alt='' class='w-16 h-16 object-cover rounded-md shrink-0'>";
+                addedProduct += "<div class='flex flex-col flex-1 gap-1 justify-center'>";
+                addedProduct += "<h6 class='text-sm font-bold text-[#1F150C]'>" + globalCart[i].name + "</h6>";
+                addedProduct += "<span class='text-xs text-[#C9B59C] font-bold'>$" + globalCart[i].price * globalCart[i].amount + "</span>";
                 addedProduct += "</div>";
-                addedProduct += "<button onClick='removeBtn(this)' data-index='" + i + "' class='flex-1 text-right text-[#1F150C]/50 hover:text-red-500 duration-300 text-sm cursor-pointer'>X</button>";
+                addedProduct += "<div class='flex items-center gap-2 shrink-0'>";
+                addedProduct += "<button onclick='minusBtn(this)'  data-index='" + i + "' class='w-6 h-6 flex items-center justify-center border border-[#D9CFC7] text-[#1F150C] rounded-md text-xs hover:bg-[#1F150C] hover:text-[#F9F8F6] duration-300 active:scale-90 cursor-pointer'>-</button>";
+                addedProduct += "<span class='text-sm font-bold text-[#1F150C] w-4 text-center'>" + globalCart[i].amount + "</span>";
+                addedProduct += "<button onclick='plusBtn(this)'  data-index='" + i + "' class='w-6 h-6 flex items-center justify-center border border-[#D9CFC7] text-[#1F150C] rounded-md text-xs hover:bg-[#1F150C] hover:text-[#F9F8F6] duration-300 active:scale-90 cursor-pointer'>+</button>";
                 addedProduct += "</div>";
-
-                // Total Price Calculator
-                priceCalculator += globalCart[i].price;
+                addedProduct += "<button onClick='removeBtn(this)' data-index='" + i + "' class='text-[#1F150C]/50 hover:text-red-500 duration-300 text-sm cursor-pointer ml-5 shrink-0'>X</button>";
+                addedProduct += "</div>";
+                priceCalculator += globalCart[i].price * globalCart[i].amount;
             }
 
             // injectors
@@ -435,6 +453,7 @@
             clearConfirm.classList.add("hidden")
             clearConfirm.classList.remove("flex")
         }
+
 
 
     </script>
