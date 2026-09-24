@@ -290,7 +290,6 @@
 
         // Onload Vars
         let globalCart = []
-        let totalAmount = 0
         const newProduct = document.getElementById("newProduct")
         const totalPrice = document.getElementById("totalPrice")
         const outerPopUp = document.getElementById("outerPopUp")
@@ -361,6 +360,7 @@
 
             // counter update
             let counter = globalCart.length
+            let totalAmount = 0
 
             for (let i = 0; i < counter; i++) {
                 totalAmount += +globalCart[i].amount
@@ -439,13 +439,12 @@
 
         // clear full cart btn
         function clearCart() {
-            if (totalAmount > 0) {
+            if (globalCart.length > 0) {
                 clearConfirm.classList.remove("hidden")
                 clearConfirm.classList.add("flex")
             }
         }
         function yes() {
-            totalAmount = 0
             globalCart = []
             cartBuilder()
             clearConfirm.classList.add("hidden")
